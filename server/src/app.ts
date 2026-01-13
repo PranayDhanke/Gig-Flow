@@ -8,6 +8,8 @@ import bidRoute from "./router/Bid.routes";
 
 const app = express();
 
+app.set("trust proxy", 1);
+
 app.use(express.json());
 app.use(cookieParser());
 
@@ -16,6 +18,7 @@ let corsOptions = {
   credentials: true,
   optionsSuccessStatus: 200,
 };
+
 
 app.use(cors(corsOptions));
 
