@@ -1,4 +1,4 @@
- import { Request, Response } from "express";
+import { Request, Response } from "express";
 import User from "../models/Auth.model";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../utils/generateToken";
@@ -28,6 +28,7 @@ export const registerUser = async (req: Request, res: Response) => {
   res.cookie("token", token, {
     httpOnly: true,
     sameSite: "none",
+    path: "/",
     secure: true,
     maxAge: 7 * 24 * 60 * 1000,
   });
@@ -59,6 +60,7 @@ export const loginUser = async (req: Request, res: Response) => {
     httpOnly: true,
     sameSite: "none",
     secure: true,
+    path: "/",
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
@@ -89,6 +91,7 @@ export const logoutUser = async (_req: Request, res: Response) => {
   res.clearCookie("token", {
     httpOnly: true,
     sameSite: "none",
+    path: "/",
     secure: true,
   });
 
