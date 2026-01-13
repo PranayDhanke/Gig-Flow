@@ -16,7 +16,11 @@ import { toast } from "sonner";
 const Dashboard = () => {
   const dispatch = useAppDispatch();
 
-  const { user } = useSelector((state: any) => state.auth);
+  const {
+    user,
+    checkAuth,
+    isLoading: authLoading,
+  } = useSelector((state: any) => state.auth);
 
   const { myGigs, isLoading } = useSelector((state: any) => state.gig);
 
@@ -25,23 +29,35 @@ const Dashboard = () => {
   if (!user) return null;
 
   useEffect(() => {
+    if (!user || !checkAuth) return;
+
     socket.on("hired", (data) => {
       toast.success(data.message);
       dispatch(getMyBids(user._id));
     });
+
     return () => {
       socket.off("hired");
     };
-  }, []);
+  }, [user, checkAuth, dispatch]);
 
   useEffect(() => {
+    if (!checkAuth || !user) return;
+
     if (user.role === "client") {
       dispatch(getmyGig(user._id));
     }
+
     if (user.role === "freelancer") {
       dispatch(getMyBids(user._id));
     }
-  }, [dispatch, user]);
+  }, [dispatch, user, checkAuth]);
+
+  if (!checkAuth || authLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user) return null;
 
   return (
     <div className="mx-auto max-w-7xl space-y-8">

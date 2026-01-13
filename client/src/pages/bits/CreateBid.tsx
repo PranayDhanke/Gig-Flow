@@ -32,13 +32,17 @@ const CreateBid = () => {
   const navigate = useNavigate();
 
   const { loading } = useSelector((state: any) => state.bid);
-  const { user } = useSelector((state: any) => state.auth);
+  const { user, checkAuth, isLoading } = useSelector(
+    (state: any) => state.auth
+  );
 
   const form = useForm<bidform>({
     resolver: zodResolver(bidSchema),
   });
 
   const submitForm = (data: bidform) => {
+    if (!user) return;
+
     disptch(
       createBid({
         message: data.message,
@@ -48,12 +52,21 @@ const CreateBid = () => {
           _id: user._id,
           name: user.name,
         },
-        gigId: gigId,
+        gigId,
       })
     );
-    toast.success("Gig Added Successfully");
+
+    toast.success("Bid Added Successfully");
     navigate("/dashboard");
   };
+
+  if (!checkAuth || isLoading) {
+    return <div className="mt-20 text-center">Loading...</div>;
+  }
+
+  if (!user) {
+    return null; // or <Navigate to="/login" />
+  }
 
   return (
     <Card className="w-full max-w-sm mx-auto mt-20">

@@ -22,7 +22,7 @@ const GigDetails = () => {
     if (gigId) {
       dispatch(getGig(gigId));
     }
-  }, [gigId, dispatch]);
+  }, [gigId, dispatch , user]);
 
   if (isloading) {
     return (

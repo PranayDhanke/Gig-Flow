@@ -30,13 +30,17 @@ const CreateGig = () => {
   const navigate = useNavigate();
 
   const { isloading } = useSelector((state: any) => state.gig);
-  const { user } = useSelector((state: any) => state.auth);
+  const { user, checkAuth, isLoading } = useSelector(
+    (state: any) => state.auth
+  );
 
   const form = useForm<gigform>({
     resolver: zodResolver(gigSchema),
   });
 
   const submitForm = (data: gigform) => {
+    if (!user) return;
+
     disptch(
       createGig({
         title: data.title,
@@ -49,9 +53,18 @@ const CreateGig = () => {
         status: "open",
       })
     );
+
     toast.success("Gig Added Successfully");
     navigate("/dashboard");
   };
+
+  if (!checkAuth || isLoading) {
+    return <div className="mt-20 text-center">Loading...</div>;
+  }
+
+  if (!user) {
+    return null; // or <Navigate to="/login" />
+  }
 
   return (
     <Card className="w-full max-w-sm mx-auto mt-20">

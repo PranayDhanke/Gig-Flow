@@ -39,7 +39,7 @@ const initials: authSlice = {
   user: null,
   checkAuth: false,
   error: "",
-  isLoading: false,
+  isLoading: true,
 };
 
 export const authSlice = createSlice({
