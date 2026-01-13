@@ -5,7 +5,7 @@ let io: Server | null = null;
 export const initSocket = (server: any) => {
   io = new Server(server, {
     cors: {
-      origin: "http://localhost:5173",
+      origin: "https://gig-flow-lovat-two.vercel.app",
       credentials: true,
     },
   });

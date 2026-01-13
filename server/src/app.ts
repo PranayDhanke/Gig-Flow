@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 let corsOptions = {
-  origin: "http://localhost:5173",
+  origin: "https://gig-flow-lovat-two.vercel.app",
   credentials: true,
   optionsSuccessStatus: 200,
 };
