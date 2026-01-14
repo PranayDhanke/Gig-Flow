@@ -11,6 +11,9 @@ const jwt_secret = process.env.JWT_SECRET as string;
 export const protect = (req: Request, res: Response, next: NextFunction) => {
   const token = req.cookies.token;
 
+  console.log("COOKIE HEADER:", req.headers.cookie);
+  console.log("PARSED COOKIES:", req.cookies);
+
   if (!token) {
     return res.status(401).json({ message: "not authorized" });
   }
