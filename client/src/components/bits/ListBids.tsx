@@ -6,9 +6,6 @@ import { Badge } from "@/components/ui/badge";
 import type { Bid } from "@/types/bid";
 import { useAppDispatch } from "@/redux/hooks";
 import { getGigBid, hireFreelancer } from "@/redux/Features/bidSlices";
-import { useSelector } from "react-redux";
-import { useEffect } from "react";
-import { toast } from "sonner";
 
 const ListBids = ({
   bids,
@@ -17,15 +14,7 @@ const ListBids = ({
   bids: Bid[];
   buttons: ["all" | "none"];
 }) => {
-  const { loading } = useSelector((state: any) => state.bid);
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (loading) {
-      toast.loading("Hiring ...");
-      toast.dismiss();
-    }
-  }, [loading]);
 
   const performAction = (bidId: string, gigId: string) => {
     dispatch(hireFreelancer(bidId)).then(() => {
