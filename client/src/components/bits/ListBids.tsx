@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import type { Bid } from "@/types/bid";
 import { useAppDispatch } from "@/redux/hooks";
 import { getGigBid, hireFreelancer } from "@/redux/Features/bidSlices";
+import { useSelector } from "react-redux";
 
 const ListBids = ({
   bids,
@@ -14,6 +15,7 @@ const ListBids = ({
   bids: Bid[];
   buttons: ["all" | "none"];
 }) => {
+  const { loading } = useSelector((state: any) => state.bid);
   const dispatch = useAppDispatch();
 
   const performAction = (bidId: string, gigId: string) => {
@@ -22,7 +24,6 @@ const ListBids = ({
     });
   };
 
-  
   return (
     <div className="mx-auto  space-y-6">
       {bids.length === 0 && (
@@ -54,7 +55,7 @@ const ListBids = ({
 
               {buttons.includes("all") && bid.status === "pending" && (
                 <Button onClick={() => performAction(bid._id, bid.gigId)}>
-                  Hire
+                  {loading ? "Hiring..." : "Hire Freelancer"}
                 </Button>
               )}
 

@@ -7,15 +7,9 @@ import { notifyHiredFreelancer } from "./socket.controller";
 export const hireFreelancer = async (req: Request, res: Response) => {
   const bidId = req.params.id;
 
-  console.log("i came here ");
-
-  console.log(bidId);
-
   const session = await mongoose.startSession();
 
   session.startTransaction();
-
-  console.log("start trsna ");
 
   try {
     const bid = await Bid.findById(bidId).session(session);
