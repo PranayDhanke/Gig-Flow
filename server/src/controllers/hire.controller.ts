@@ -14,8 +14,6 @@ export const hireFreelancer = async (req: Request, res: Response) => {
   try {
     const bid = await Bid.findById(bidId).session(session);
 
-    console.log(bid);
-
     if (!bid) {
       throw new Error("there is no bid");
     }

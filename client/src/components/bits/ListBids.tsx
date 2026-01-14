@@ -7,6 +7,8 @@ import type { Bid } from "@/types/bid";
 import { useAppDispatch } from "@/redux/hooks";
 import { getGigBid, hireFreelancer } from "@/redux/Features/bidSlices";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { toast } from "sonner";
 
 const ListBids = ({
   bids,
@@ -17,6 +19,13 @@ const ListBids = ({
 }) => {
   const { loading } = useSelector((state: any) => state.bid);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (loading) {
+      toast.loading("Hiring ...");
+      toast.dismiss();
+    }
+  }, [loading]);
 
   const performAction = (bidId: string, gigId: string) => {
     dispatch(hireFreelancer(bidId)).then(() => {
@@ -55,7 +64,7 @@ const ListBids = ({
 
               {buttons.includes("all") && bid.status === "pending" && (
                 <Button onClick={() => performAction(bid._id, bid.gigId)}>
-                  {loading ? "Hiring..." : "Hire Freelancer"}
+                  Hire Freelancer
                 </Button>
               )}
 
